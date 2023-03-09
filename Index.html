@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment PH - Maja</title>
+    <link rel="stylesheet" href="CSS/general.css" />
+    <link rel="stylesheet" href="CSS/header.css" />
+    <link rel="stylesheet" href="CSS/employee.css" />
+    <!-- <link rel="stylesheet" href="CSS/form.css" /> -->
+    <script defer src="script.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule=""
+      src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"
+    ></script>
+  </head>
+  <body>
+    <header class="header">
+      <ul class="btns-list">
+        <li><button class="btn-employee">Employee</button></li>
+        <li><button class="btn-task">Task</button></li>
+        <li><button class="btn-sprint">Sprint</button></li>
+        <li><button class="btn-ds">Delete storage</button></li>
+      </ul>
+    </header>
+    <main>
+      <!-- SECTION EMPLOYEE/////////////////////// -->
+      <section class="section-employee hidden">
+        <ul class="lists-employee flex-column">
+          <li class="header-employee flex">
+            <p class="empl-id">ID</p>
+            <p class="fullname">Full name</p>
+            <p class="email">Email</p>
+            <p class="phone-number">Phone number</p>
+            <p class="birth-date">Date of birth</p>
+            <p class="monthly-salary">Monthly salary</p>
+            <button class="create">Create</button>
+          </li>
+        </ul>
+        <ul class="lists-added-employee flex-column"></ul>
+
+        <form class="form-create hidden">
+          <button class="btn-close">
+            <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+          </button>
+          <div>
+            <label for="full-name">Full name</label>
+            <input
+              class="full-name"
+              type="text"
+              placeholder="Maja Stojanovic"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="i-email">Email</label>
+            <input
+              class="i-email"
+              type="i-email"
+              placeholder="me@example.com"
+              required
+            />
+          </div>
+          <div>
+            <label for="phone">Phone number</label>
+            <input
+              class="phone"
+              type="phone"
+              placeholder="+381695666301"
+              required
+            />
+          </div>
+          <div>
+            <label for="birth">Date of birth</label>
+            <input
+              class="birth"
+              type="birth"
+              placeholder="23/1/1996"
+              required
+            />
+          </div>
+          <div>
+            <label for="salary">Monthly salary</label>
+            <input class="salary" type="salary" placeholder="400e" required />
+          </div>
+
+          <button type="submit " class="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
