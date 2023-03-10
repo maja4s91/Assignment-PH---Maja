@@ -9,8 +9,3 @@
   justify-content: center;
   align-content: center;
 }
-
-.hidden {
-  opacity: 0;
-  visibility: hidden;
-}

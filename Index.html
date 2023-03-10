@@ -93,6 +93,59 @@
           <button type="submit " class="submit">Submit</button>
         </form>
       </section>
+
+      <!-- SECTION TASK/////////////////////// -->
+      <section class="section-task hidden">
+        <ul class="lists-task flex-column">
+          <li class="header-task flex">
+            <p class="task-id">ID</p>
+            <p class="task-title">Title</p>
+            <p class="task-desc">Description</p>
+            <p class="task-fullname">Assignee</p>
+            <p class="task-due">Due date</p>
+
+            <button class="create-task">Create</button>
+          </li>
+        </ul>
+        <ul class="lists-added-tasks flex-column"></ul>
+
+        <form class="form-create-task hidden">
+          <button class="btn-close-task">
+            <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+          </button>
+
+          <div>
+            <label for="title">Title</label>
+            <input class="title" type="text" placeholder="Fix gaps" required />
+          </div>
+          <div>
+            <label for="description">Description</label>
+            <textarea
+              class="description"
+              rows="6"
+              maxlength="3000"
+              placeholder=""
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label for="full-name-task">Assignee</label>
+            <input
+              class="full-name-task"
+              type="text"
+              placeholder="Maja Stojanovic"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="due">Due date</label>
+            <input class="due" type="due" placeholder="23/1/2024" required />
+          </div>
+
+          <button type="submit " class="submit-task">Submit</button>
+        </form>
+      </section>
     </main>
   </body>
 </html>
