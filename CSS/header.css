@@ -1,11 +1,35 @@
 .header {
-  background-color: brown;
+  background-color: var(--Medium-Green);
+  padding: 1.5rem;
+  /* box-shadow: 0 0.4rem 0.7rem var(--Medium-Green); */
 }
 
 .btns-list {
   list-style: none;
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   justify-content: center;
   align-content: center;
+}
+
+.btn-employee,
+.btn-task,
+.btn-sprint,
+.btn-ds {
+  background-color: var(--Medium-Green);
+  border: none;
+  color: var(--Dark-Gray);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.6rem;
+  padding: 0.5rem;
+  transition: all 0.3s;
+}
+
+.btn-employee:hover,
+.btn-task:hover,
+.btn-sprint:hover,
+.btn-ds:hover {
+  color: var(--Dark-Green);
+  background-color: #fff;
 }

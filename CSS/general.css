@@ -1,8 +1,9 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Prosto+One&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Prosto+One&display=swap");
 
 :root {
-  --Dark-Blue: #19bded;
-  --Light-Blue: #fffef1;
+  --Dark-Green: #02c39a;
+  --Medium-Green: #86cb92;
+  --Light-Green: #fffef1;
 
   --Dark-Gray: #323430;
   --Medium-Grey: #545550;
@@ -17,7 +18,7 @@
 
 html {
   font-size: 62.5%;
-  /* font-family: "Prosto One", cursive; */
+  font-family: "Prosto One", cursive;
   overflow-x: hidden;
 }
 

@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="CSS/general.css" />
     <link rel="stylesheet" href="CSS/header.css" />
     <link rel="stylesheet" href="CSS/employee.css" />
-    <!-- <link rel="stylesheet" href="CSS/form.css" /> -->
+    <link rel="stylesheet" href="CSS/form.css" />
+    <!-- <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    /> -->
     <script defer src="script.js"></script>
     <script
       type="module"
@@ -28,18 +32,21 @@
         <li><button class="btn-ds">Delete storage</button></li>
       </ul>
     </header>
-    <main>
+    <main class="main-container">
       <!-- SECTION EMPLOYEE/////////////////////// -->
       <section class="section-employee hidden">
-        <ul class="lists-employee flex-column">
-          <li class="header-employee flex">
+        <div class="heading-employees">
+          <h2 class="emp-heading">Employees</h2>
+          <button class="create">Create</button>
+        </div>
+        <ul class="lists-employee">
+          <li class="header-employee">
             <p class="empl-id">ID</p>
             <p class="fullname">Full name</p>
             <p class="email">Email</p>
             <p class="phone-number">Phone number</p>
             <p class="birth-date">Date of birth</p>
             <p class="monthly-salary">Monthly salary</p>
-            <button class="create">Create</button>
           </li>
         </ul>
         <ul class="lists-added-employee flex-column"></ul>

@@ -152,7 +152,9 @@ const renderEmployees = function () {
   if (!data) return;
 
   data.forEach((e) => {
-    let html = `<li class="employee-info flex">
+    let html = `
+   
+    <li class="employee-info">
     <p class="id-empl">${e.id}</p>
   <p class="fullname">${e.name}</p>
   <p class="email">${e.email}</p>
