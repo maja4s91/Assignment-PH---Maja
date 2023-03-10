@@ -54,4 +54,5 @@ body {
   backdrop-filter: blur(4px);
   z-index: 100;
   transition: all 0.5s;
+  transform: translate(calc(50vw - 50%), calc(50vh - 50%));
 }
