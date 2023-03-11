@@ -1,8 +1,3 @@
-/* .main-container {
-  max-width: 120rem;
-  margin: 0 auto;
-} */
-
 .form-create {
   padding-top: 10vh;
   text-align: center;
@@ -50,7 +45,7 @@
 .btn-edit:hover,
 .btn-close:hover {
   color: #fff;
-  background-color: var(--Medium-Green);
+  /* background-color: var(--Medium-Green); */
   transform: translateY(-1px);
 }
 

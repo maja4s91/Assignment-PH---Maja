@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="CSS/general.css" />
     <link rel="stylesheet" href="CSS/header.css" />
     <link rel="stylesheet" href="CSS/employee.css" />
-    <link rel="stylesheet" href="CSS/form.css" />
+    <link rel="stylesheet" href="CSS/form-employee.css" />
+    <link rel="stylesheet" href="CSS/form-task.css" />
+    <link rel="stylesheet" href="CSS/task.css" />
     <!-- <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
       rel="stylesheet"
@@ -93,20 +95,25 @@
           </div>
 
           <button type="submit " class="submit">Submit</button>
+
+          <button type="edit" class="btn-edit">Edit</button>
         </form>
       </section>
 
       <!-- SECTION TASK/////////////////////// -->
       <section class="section-task hidden">
+        <div class="heading-task">
+          <h2 class="tas-heading">Tasks</h2>
+          <button class="create-task">Create</button>
+        </div>
         <ul class="lists-task flex-column">
           <li class="header-task flex">
             <p class="task-id">ID</p>
             <p class="task-title">Title</p>
-            <p class="task-desc">Description</p>
+            <!-- <p class="task-desc">Description</p> -->
             <p class="task-fullname">Assignee</p>
+            <p class="task-status">Status</p>
             <p class="task-due">Due date</p>
-
-            <button class="create-task">Create</button>
           </li>
         </ul>
         <ul class="lists-added-tasks flex-column"></ul>
@@ -116,11 +123,11 @@
             <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
           </button>
 
-          <div>
+          <div class="input-tas">
             <label for="title">Title</label>
             <input class="title" type="text" placeholder="Fix gaps" required />
           </div>
-          <div>
+          <div class="input-tas">
             <label for="description">Description</label>
             <textarea
               class="description"
@@ -130,22 +137,36 @@
               required
             ></textarea>
           </div>
-          <div>
+          <div class="input-tas">
             <label for="full-name-task">Assignee</label>
-            <input
+            <select id="select-assignee" class="full-name-task" required>
+              <!-- <input
               class="full-name-task"
               type="text"
               placeholder="Maja Stojanovic"
               required
-            />
+            />  -->
+            </select>
           </div>
 
-          <div>
+          <div class="input-tas">
+            <label for="status-task">Task status</label>
+            <select id="select-status" class="select-status" required>
+              <option value="">Choose status</option>
+              <option value="To do">To do</option>
+              <option value="In progress">In progress</option>
+
+              <option value="Complited">Complited</option>
+            </select>
+          </div>
+
+          <div class="input-tas">
             <label for="due">Due date</label>
-            <input class="due" type="due" placeholder="23/1/2024" required />
+            <input class="due" type="date" placeholder="23/1/2024" required />
           </div>
 
           <button type="submit " class="submit-task">Submit</button>
+          <button type="edit" class="btn-edit-task">Edit</button>
         </form>
       </section>
     </main>

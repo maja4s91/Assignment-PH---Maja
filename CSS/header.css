@@ -24,12 +24,17 @@
   font-size: 1.6rem;
   padding: 0.5rem;
   transition: all 0.3s;
+  border-radius: 2px;
 }
 
 .btn-employee:hover,
+.btn-employee:focus,
 .btn-task:hover,
+.btn-task:focus,
 .btn-sprint:hover,
-.btn-ds:hover {
+.btn-sprint:focus,
+.btn-ds:hover,
+.btn-ds:focus {
   color: var(--Dark-Green);
   background-color: #fff;
 }

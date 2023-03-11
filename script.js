@@ -16,12 +16,13 @@ const btnClose = document.querySelector(".btn-close");
 // const employeeInfo = document.querySelector(".employee-info");
 const btnEdit = document.querySelector(".btn-edit");
 
+let editEmployeeId = 0;
+
 // Employee entity
 
 btnEmployee.addEventListener("click", (e) => {
-  sectionTask.classList.add("hidden");
-
   e.preventDefault();
+  sectionTask.classList.add("hidden");
   sectionEmployee.classList.remove("hidden");
 
   renderEmployees();
@@ -35,9 +36,9 @@ btnCreate.addEventListener("click", (e) => {
   formCreate.classList.remove("hidden");
   formCreate.classList.add("overlay");
 
-  listsEmployee.classList.toggle("hidden");
+  listsEmployee.classList.remove("hidden");
 
-  if (btnEdit) btnEdit.classList.add("hidden");
+  btnEdit.classList.add("hidden");
 
   inputName.value =
     inputEmail.value =
@@ -52,7 +53,7 @@ btnCreate.addEventListener("click", (e) => {
 btnSubmit.addEventListener("click", (e) => {
   e.preventDefault();
 
-  formCreate.classList.toggle("hidden");
+  formCreate.classList.add("hidden");
 
   // Getting data from the form
   let addEmployee = {};
@@ -90,46 +91,90 @@ btnSubmit.addEventListener("click", (e) => {
   renderEmployees();
 });
 
-// Reading, editing and deleting data of an employee
+// READING AND DELETING EMPLOYEE DATA
 
 listsEmployee.addEventListener("click", function (e) {
-  // Rendering and editing data of an employee, as clicked
+  // Checking if the delete btn is clicked
   const btnDel = e.target.closest(".btn-delete");
+
   if (!btnDel) {
-    const btnEdit = document.querySelector(".btn-edit");
-    if (!btnEdit) renderEdit();
-    formCreate.classList.toggle("hidden");
+    if (!e.target.closest(".employee-info")) return;
+    // Reading employee data as clicked
+    btnEdit.classList.remove("hidden");
+    formCreate.classList.remove("hidden");
+    formCreate.classList.add("overlay");
     btnSubmit.classList.add("hidden");
-    listsEmployee.classList.add("hidden");
+    listsEmployee.classList.remove("hidden");
 
-    //!!!!!!!!!!!!!!!!! RENDER DATA IN FORM NEEDED (FROM LIST TO FORM)
-
-    // const liElem = e.target.closest(".employee-info");
-    // const idElem = liElem.querySelector(".id-empl");
-    // let data = JSON.parse(localStorage.getItem("Employees"));
-    // console.log(data);
-
-    // data = data.filter((em) => em.id === +idElem.innerHTML);
-    // localStorage.setItem("Employees", JSON.stringify(data));
-    // renderEmployees(); render form with data
-
-    // BTN EDIT FUNCIONALITY
-    btnEdit.addEventListener("click", function (e) {
-      e.preventDefault();
-      btnEdit.classList.toggle("hidden");
-      btnSubmit.classList.toggle("hidden");
-    });
-  } else {
-    // Deleting employee
-    const liElem = e.target.closest(".employee-info");
-    const idElem = liElem.querySelector(".id-empl");
+    // Get employee data from storage
     let data = JSON.parse(localStorage.getItem("Employees"));
     console.log(data);
 
-    data = data.filter((em) => em.id !== +idElem.innerHTML);
+    // Find employee's id from selected html li e.
+    const selectedId = e.target
+      .closest(".employee-info")
+      .querySelector(".id-empl").textContent;
+
+    //  Get global employee's id from selected html li e.
+    editEmployeeId = +selectedId;
+    // Find employee object from storage based on selected id
+    const employee = data.filter((e) => e.id === +selectedId)[0];
+
+    // Push employee's data to form
+
+    inputName.value = employee.name;
+    inputEmail.value = employee.email;
+    inputPhone.value = employee.phone;
+    inputBirth.value = employee.birth;
+    inputSalary.value = employee.salary;
+  } else {
+    // DELETING EMPLOYEE DATA
+
+    let data = JSON.parse(localStorage.getItem("Employees"));
+    const selectedId = e.target
+      .closest(".employee-info")
+      .querySelector(".id-empl").textContent;
+
+    data = data.filter((em) => em.id !== +selectedId);
     localStorage.setItem("Employees", JSON.stringify(data));
     renderEmployees();
   }
+});
+
+// EDITING EMPLOYEE DATA
+
+btnEdit.addEventListener("click", function (e) {
+  e.preventDefault();
+  btnEdit.classList.add("hidden");
+  // btnSubmit.classList.add("hidden");
+  formCreate.classList.add("hidden");
+
+  // Get new form employee data
+
+  const name = inputName.value;
+  const email = inputEmail.value;
+  const phone = inputPhone.value;
+  const birth = inputBirth.value;
+  const salary = inputSalary.value;
+
+  // Find selected employee for editing
+  let data = JSON.parse(localStorage.getItem("Employees"));
+  console.log(data);
+
+  let editEmployee = data.filter((e) => e.id === editEmployeeId)[0];
+
+  // Update employee data
+  editEmployee.name = name;
+  editEmployee.email = email;
+  editEmployee.phone = phone;
+  editEmployee.birth = birth;
+  editEmployee.salary = salary;
+
+  // Send updated data to local storage
+
+  localStorage.setItem("Employees", JSON.stringify(data));
+
+  renderEmployees();
 });
 
 // HELPER FUNCTION
@@ -213,10 +258,14 @@ const btnCreateTask = document.querySelector(".create-task");
 const btnSubmitTask = document.querySelector(".submit-task");
 const inputTitle = document.querySelector(".title");
 const inputDesc = document.querySelector(".description");
-const inputAssignee = document.querySelector(".full-name-task");
+const inputStatus = document.querySelector(".select-status");
+
 const inputDue = document.querySelector(".due");
 const listsTask = document.querySelector(".lists-added-tasks");
+const selectAssignee = document.querySelector(".full-name-task");
+const btnEditTask = document.querySelector(".btn-edit-task");
 
+let editTaskId = 0;
 // RENDER TASK ENTITY
 
 btnTask.addEventListener("click", (e) => {
@@ -233,19 +282,26 @@ btnCreateTask.addEventListener("click", function (e) {
   e.preventDefault();
   formTask.classList.remove("hidden");
   formTask.classList.add("overlay");
+  btnSubmitTask.classList.remove("hidden");
 
-  listsTask.classList.toggle("hidden");
+  listsTask.classList.remove("hidden");
 
-  const btnEditTask = document.querySelector(".btn-edit-task");
+  btnEditTask.classList.add("hidden");
 
-  if (btnEditTask) btnEditTask.classList.add("hidden");
+  const data = JSON.parse(localStorage.getItem("Employees"));
+  console.log(data);
 
-  inputName.value =
-    inputTitle.value =
-    inputDesc.value =
-    inputAssignee.value =
-    inputDue.value =
-      "";
+  selectAssignee.innerHTML = `<option class="option-assignee" value="">Unassigned</option>`;
+
+  data.forEach((e) => {
+    let html = `
+    <option class="option-assignee"value="${e.name}">${e.name}</option>
+  `;
+
+    selectAssignee.insertAdjacentHTML("beforeend", html);
+  });
+
+  inputName.value = inputTitle.value = inputDesc.value = inputDue.value = "";
 });
 
 // SUBMIT TASK
@@ -253,11 +309,14 @@ btnCreateTask.addEventListener("click", function (e) {
 btnSubmitTask.addEventListener("click", function (e) {
   e.preventDefault();
 
+  formTask.classList.add("hidden");
+
   let taskObject = {};
 
   const title = inputTitle.value;
   const description = inputDesc.value;
-  const assignee = inputAssignee.value;
+  const assignee = selectAssignee.value;
+  const status = inputStatus.value;
   const dueDate = inputDue.value;
 
   taskObject = {
@@ -265,6 +324,7 @@ btnSubmitTask.addEventListener("click", function (e) {
     title: title,
     description: description,
     assignee: assignee,
+    status: status,
     dueDate: dueDate,
   };
 
@@ -285,52 +345,97 @@ btnSubmitTask.addEventListener("click", function (e) {
 
   console.log(JSON.parse(localStorage.getItem("Tasks")));
 
-  formTask.classList.toggle("hidden");
-
   renderTasks();
 });
 
-// Reading, editing and deleting data of an employee
+//////////////////////////////////////////
+
+// READING AND DELETING EMPLOYEE DATA
 
 listsTask.addEventListener("click", function (e) {
-  // Rendering and editing data of an employee, as clicked
+  // Checking if the delete btn is clicked
   const btnDelete = e.target.closest(".btn-delete-task");
+
   if (!btnDelete) {
-    const btnEditTask = document.querySelector(".btn-edit-task");
-    if (!btnEditTask) renderEditTask();
-    formTask.classList.toggle("hidden");
+    if (!e.target.closest(".task-info")) return;
+
+    // Reading task data as clicked
+    btnEditTask.classList.remove("hidden");
+    formTask.classList.remove("hidden");
+    formTask.classList.add("overlay");
     btnSubmitTask.classList.add("hidden");
-    listsTask.classList.add("hidden");
+    listsTask.classList.remove("hidden");
 
-    //!!!!!!!!!!!!!!!!! RENDER DATA IN FORM NEEDED (FROM LIST TO FORM)
-
-    // const liElem = e.target.closest(".employee-info");
-    // const idElem = liElem.querySelector(".id-empl");
-    // let data = JSON.parse(localStorage.getItem("Employees"));
-    // console.log(data);
-
-    // data = data.filter((em) => em.id === +idElem.innerHTML);
-    // localStorage.setItem("Employees", JSON.stringify(data));
-    // renderEmployees(); render form with data
-
-    // BTN EDIT TASK FUNCIONALITY
-    btnEditTask.addEventListener("click", function (e) {
-      e.preventDefault();
-      btnEditTask.classList.toggle("hidden");
-      btnSubmitTask.classList.toggle("hidden");
-    });
-  } else {
-    // Deleting employee
-    const liTask = e.target.closest(".task-info");
-
-    const idTask = liTask.querySelector(".li-id-task");
+    // Get task data from storage
     let data = JSON.parse(localStorage.getItem("Tasks"));
     console.log(data);
 
-    data = data.filter((ta) => ta.id !== +idTask.innerHTML);
+    // Find task id from selected html li e.
+    const selectedIdTask = e.target
+      .closest(".task-info")
+      .querySelector(".li-id-task").textContent;
+
+    //  Get global task id from selected html li e.
+    editTaskId = +selectedIdTask;
+    // Find task object from storage based on selected id
+    const task = data.filter((t) => t.id === +selectedIdTask)[0];
+
+    // Push task data to form
+
+    inputTitle.value = task.title;
+    inputDesc.value = task.description;
+    selectAssignee.value = task.assignee;
+    inputStatus.value = task.status;
+    inputDue.value = task.dueDate;
+  } else {
+    // DELETING TASK DATA
+
+    let data = JSON.parse(localStorage.getItem("Tasks"));
+
+    const selectedIdTask = e.target
+      .closest(".task-info")
+      .querySelector(".li-id-task").textContent;
+
+    data = data.filter((ta) => ta.id !== +selectedIdTask);
     localStorage.setItem("Tasks", JSON.stringify(data));
     renderTasks();
   }
+});
+
+// EDITING TASK DATA
+
+btnEditTask.addEventListener("click", function (e) {
+  e.preventDefault();
+  btnEditTask.classList.add("hidden");
+  // btnSubmit.classList.add("hidden");
+  formTask.classList.add("hidden");
+
+  // Get new form task data
+
+  const title = inputTitle.value;
+  const description = inputDesc.value;
+  const assignee = selectAssignee.value;
+  const status = inputStatus.value;
+  const dueDate = inputDue.value;
+
+  // Find selected task for editing
+  let data = JSON.parse(localStorage.getItem("Tasks"));
+  console.log(data);
+
+  let editTask = data.filter((t) => t.id === editTaskId)[0];
+
+  // Update Task data
+  editTask.title = title;
+  editTask.description = description;
+  editTask.assignee = assignee;
+  editTask.status = status;
+  editTask.dueDate = dueDate;
+
+  // Send updated data to local storage
+
+  localStorage.setItem("Tasks", JSON.stringify(data));
+
+  renderTasks();
 });
 
 // HELPER FUNCTION////////////////////////////////
@@ -347,8 +452,9 @@ const renderTasks = function () {
     let html = `<li class="task-info flex">
     <p class="li-id-task">${t.id}</p>
    <p class="li-title">${t.title}</p>
-  <p class="li-desc">${t.description}</p>
   <p class="li-assignee">${t.assignee}</p>
+  <p class="li-status">${t.status}</p>
+
   <p class="li-due">${t.dueDate}</p>
 
 
@@ -358,14 +464,6 @@ const renderTasks = function () {
 
     listsTask.insertAdjacentHTML("beforeend", html);
   });
-};
-
-// Create edit button
-
-const renderEditTask = function () {
-  let html = ` <button class="btn-edit-task">Edit</button>`;
-
-  formTask.insertAdjacentHTML("beforeend", html);
 };
 
 // Closing the form window
