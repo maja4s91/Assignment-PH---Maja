@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="CSS/form-employee.css" />
     <link rel="stylesheet" href="CSS/form-task.css" />
     <link rel="stylesheet" href="CSS/task.css" />
+    <link rel="stylesheet" href="CSS/epic.css" />
+    <link rel="stylesheet" href="CSS/form-epic.css" />
     <!-- <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
       rel="stylesheet"
@@ -28,9 +30,9 @@
   <body>
     <header class="header">
       <ul class="btns-list">
-        <li><button class="btn-employee">Employee</button></li>
-        <li><button class="btn-task">Task</button></li>
-        <li><button class="btn-sprint">Sprint</button></li>
+        <li><button class="btn-employee">Employees</button></li>
+        <li><button class="btn-task">Tasks</button></li>
+        <li><button class="btn-epic">Epics</button></li>
         <li><button class="btn-ds">Delete storage</button></li>
       </ul>
     </header>
@@ -120,7 +122,7 @@
 
         <form class="form-create-task hidden">
           <button class="btn-close-task">
-            <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+            <ion-icon class="icon-close-task" name="close-outline"></ion-icon>
           </button>
 
           <div class="input-tas">
@@ -167,6 +169,76 @@
 
           <button type="submit " class="submit-task">Submit</button>
           <button type="edit" class="btn-edit-task">Edit</button>
+        </form>
+      </section>
+
+      <!-- SECTION EPIC/////////////////////// -->
+      <section class="section-epic hidden">
+        <div class="heading-epic">
+          <h2 class="epi-heading">Epics</h2>
+          <button class="create-epic">Create</button>
+        </div>
+        <ul class="lists-epic flex-column">
+          <li class="header-epic flex">
+            <p class="epic-id">ID</p>
+            <p class="epic-title">Title</p>
+
+            <p class="epic-status">Status</p>
+            <!-- <p class="task-due">Due date</p> -->
+          </li>
+        </ul>
+        <ul class="lists-added-epics flex-column"></ul>
+
+        <form class="form-create-epic hidden">
+          <button class="btn-close-epic">
+            <ion-icon class="icon-close-epic" name="close-outline"></ion-icon>
+          </button>
+
+          <div class="input-epi">
+            <label for="title">Title</label>
+            <input
+              class="title-epic"
+              type="text"
+              placeholder="Fix gaps"
+              required
+            />
+          </div>
+
+          <div class="input-epi">
+            <label for="status-epi">Task status</label>
+            <select id="select-status" class="select-status-epic" required>
+              <option value="">Choose status</option>
+              <option value="To do">To do</option>
+              <option value="In progress">In progress</option>
+
+              <option value="Complited">Complited</option>
+            </select>
+          </div>
+
+          <div class="input-epi">
+            <label for="description">Description</label>
+            <textarea
+              class="description-epic"
+              rows="6"
+              maxlength="3000"
+              placeholder=""
+              required
+            ></textarea>
+          </div>
+          <div class="input-epi">
+            <label for="list-epic">Tasks list</label>
+            <select id="select-assignee" class="list-epic" required>
+              <!-- <input
+              class="full-name-task"
+              type="text"
+              placeholder="Maja Stojanovic"
+              required
+            />  -->
+            </select>
+          </div>
+
+          <button type="submit " class="submit-epic">Submit</button>
+          <button type="edit" class="btn-edit-epic">Edit</button>
         </form>
       </section>
     </main>

@@ -23,6 +23,7 @@ let editEmployeeId = 0;
 btnEmployee.addEventListener("click", (e) => {
   e.preventDefault();
   sectionTask.classList.add("hidden");
+  sectionEpic.classList.add("hidden");
   sectionEmployee.classList.remove("hidden");
 
   renderEmployees();
@@ -249,7 +250,7 @@ let globalId = getMaxId() + 1;
 
 // ///////////////////////////////////////////////TASK/////////////////////////
 
-// Task entity
+// TASK ENTITY
 
 const sectionTask = document.querySelector(".section-task");
 const btnTask = document.querySelector(".btn-task");
@@ -271,6 +272,7 @@ let editTaskId = 0;
 btnTask.addEventListener("click", (e) => {
   e.preventDefault();
   sectionEmployee.classList.add("hidden");
+  sectionEpic.classList.add("hidden");
   sectionTask.classList.remove("hidden");
 
   renderTasks();
@@ -492,3 +494,228 @@ const getMaxIdTask = function () {
 };
 
 let globalIdTask = getMaxIdTask() + 1;
+
+// ///////////////////////////////////////////////TASK/////////////////////////
+
+// EPIC ENTITY
+
+const sectionEpic = document.querySelector(".section-epic");
+const btnEpic = document.querySelector(".btn-epic");
+const formEpic = document.querySelector(".form-create-epic");
+const btnCreateEpic = document.querySelector(".create-epic");
+const btnSubmitEpic = document.querySelector(".submit-epic");
+const inputTitleEpic = document.querySelector(".title-epic");
+const inputDescEpic = document.querySelector(".description-epic");
+const inputStatusEpic = document.querySelector(".select-status-epic");
+
+const listsEpic = document.querySelector(".lists-added-epics");
+
+const btnEditEpic = document.querySelector(".btn-edit-epic");
+
+let editEpicId = 0;
+
+// RENDER EPIC ENTITY
+
+btnEpic.addEventListener("click", (e) => {
+  e.preventDefault();
+  sectionEmployee.classList.add("hidden");
+  sectionTask.classList.add("hidden");
+  sectionEpic.classList.remove("hidden");
+
+  renderEpics();
+});
+
+// ADD NEW EPIC
+
+btnCreateEpic.addEventListener("click", function (e) {
+  e.preventDefault();
+  formEpic.classList.remove("hidden");
+  formEpic.classList.add("overlay");
+  btnSubmitEpic.classList.remove("hidden");
+
+  listsEpic.classList.remove("hidden");
+
+  btnEditEpic.classList.add("hidden");
+
+  inputName.value = inputTitle.value = inputDesc.value = inputDue.value = "";
+});
+
+// SUBMIT EPIC
+
+btnSubmitEpic.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  formEpic.classList.add("hidden");
+
+  let epicObject = {};
+
+  const title = inputTitleEpic.value;
+  const description = inputDescEpic.value;
+
+  const status = inputStatusEpic.value;
+
+  epicObject = {
+    id: globalIdEpic++,
+    title: title,
+    description: description,
+    status: status,
+  };
+
+  console.log(epicObject);
+
+  // Saving data to local storage
+
+  const data = JSON.parse(localStorage.getItem("Epics"));
+  console.log(data);
+  if (!data) {
+    const epicsArray = [epicObject];
+    console.log(epicsArray);
+    localStorage.setItem("Epics", JSON.stringify(epicsArray));
+  } else {
+    data.push(epicObject);
+    localStorage.setItem("Epics", JSON.stringify(data));
+  }
+
+  console.log(JSON.parse(localStorage.getItem("Epics")));
+
+  renderEpics();
+});
+
+//////////////////////////////////////////
+
+// READING AND DELETING EPICS DATA
+
+listsEpic.addEventListener("click", function (e) {
+  // Checking if the delete btn is clicked
+  const btnDeleteEpic = e.target.closest(".btn-delete-epic");
+
+  if (!btnDeleteEpic) {
+    if (!e.target.closest(".epic-info")) return;
+
+    // Reading epic data as clicked
+    btnEditEpic.classList.remove("hidden");
+    formEpic.classList.remove("hidden");
+    formEpic.classList.add("overlay");
+    btnSubmitEpic.classList.add("hidden");
+    listsEpic.classList.remove("hidden");
+
+    // Get epic data from storage
+    let data = JSON.parse(localStorage.getItem("Epics"));
+    console.log(data);
+
+    // Find epic id from selected html li e.
+    const selectedIdEpic = e.target
+      .closest(".epic-info")
+      .querySelector(".li-id-epic").textContent;
+
+    //  Get global epic id from selected html li e.
+    editEpicId = +selectedIdEpic;
+
+    // Find epic object from storage based on selected id
+    const epic = data.filter((e) => e.id === +selectedIdEpic)[0];
+
+    // Push epic data to form
+    inputTitleEpic.value = epic.title;
+    inputDescEpic.value = epic.description;
+    inputStatusEpic.value = epic.status;
+  } else {
+    // DELETING EPIC DATA
+
+    let data = JSON.parse(localStorage.getItem("Epics"));
+
+    const selectedIdEpic = e.target
+      .closest(".epic-info")
+      .querySelector(".li-id-epic").textContent;
+
+    data = data.filter((ep) => ep.id !== +selectedIdEpic);
+    localStorage.setItem("Epics", JSON.stringify(data));
+    renderEpics();
+  }
+});
+
+// EDITING EPIC DATA
+
+btnEditEpic.addEventListener("click", function (e) {
+  e.preventDefault();
+  btnEditEpic.classList.add("hidden");
+  // btnSubmit.classList.add("hidden");
+  formEpic.classList.add("hidden");
+
+  // Get new form epic data
+
+  const title = inputTitleEpic.value;
+  const description = inputDescEpic.value;
+  const status = inputStatusEpic.value;
+
+  // Find selected epic for editing
+  let data = JSON.parse(localStorage.getItem("Epics"));
+  console.log(data);
+
+  let editEpic = data.filter((e) => e.id === editEpicId)[0];
+
+  // Update epic data
+  editEpic.title = title;
+  editEpic.description = description;
+  editEpic.status = status;
+
+  // Send updated data to local storage
+
+  localStorage.setItem("Epics", JSON.stringify(data));
+
+  renderEpics();
+});
+
+// HELPER FUNCTION////////////////////////////////
+
+// RENDERING EPICS
+
+const renderEpics = function () {
+  let data = JSON.parse(localStorage.getItem("Epics"));
+
+  listsEpic.innerHTML = "";
+  if (!data) return;
+
+  data.forEach((e) => {
+    let html = `<li class="epic-info flex">
+    <p class="li-id-epic">${e.id}</p>
+   <p class="li-title-epic">${e.title}</p>
+  
+  <p class="li-status-epic">${e.status}</p>
+
+
+
+
+    <button class="btn-delete-epic">Delete</button>
+  
+</li>`;
+
+    listsEpic.insertAdjacentHTML("beforeend", html);
+  });
+};
+
+// Closing the form window
+
+const btnCloseEpic = document.querySelector(".btn-close-epic");
+
+btnCloseEpic.addEventListener("click", function (e) {
+  e.preventDefault();
+  formEpic.classList.add("hidden");
+  btnSubmitEpic.classList.remove("hidden");
+  listsEpic.classList.remove("hidden");
+});
+
+const getMaxIdEpic = function () {
+  const data = JSON.parse(localStorage.getItem("Epics"));
+  console.log(data);
+  let id = 0;
+
+  if (!data) return id;
+
+  data.forEach((e) => {
+    if (e.id > id) id = e.id;
+  });
+
+  return id;
+};
+
+let globalIdEpic = getMaxIdEpic() + 1;
