@@ -161,7 +161,7 @@
               <option value="To do">To do</option>
               <option value="In progress">In progress</option>
 
-              <option value="Complited">Complited</option>
+              <option value="Completed">Completed</option>
             </select>
           </div>
 
@@ -211,10 +211,14 @@
             <label for="status-epi">Task status</label>
             <select id="select-status" class="select-status-epic" required>
               <option value="">Choose status</option>
-              <option value="To do">To do</option>
-              <option value="In progress">In progress</option>
+              <option value="To do" class="epic-todo">To do</option>
+              <option value="In progress" class="epic-inprogress">
+                In progress
+              </option>
 
-              <option value="Complited">Complited</option>
+              <option value="Completed" class="epic-completed">
+                Completed
+              </option>
             </select>
           </div>
 
@@ -266,7 +270,7 @@
                 <div class="five-employee-box">
                   <p class="report-employee-names">Maja</p>
                   <p class="report-employee-tasks">7</p>
-                  <p class="report-employee-data">17/12/2023</p>
+                  <p class="report-employee-date">17/12/2023</p>
                 </div>
               </li>
             </ul>
@@ -274,23 +278,27 @@
           <div class="report-task">
             <h3 class="report-task-heading">Tasks report</h3>
             <p class="report-task-title">
-              Total complited: <span class="report-task-sum">1</span>
+              Total completed:
+              <span class="report-task-sum report__task-completed">1</span>
             </p>
             <p class="report-task-title">
-              Total in progress: <span class="report-task-sum">1</span>
+              Total in progress:
+              <span class="report-task-sum report__task-inprogress">1</span>
             </p>
             <p class="report-task-title">
-              Total to do: <span class="report-task-sum">1</span>
+              Total to do:
+              <span class="report-task-sum report__task-todo">1</span>
             </p>
 
             <p class="report-task-title">
-              Total tasks: <span class="report-task-sum">1</span>
+              Total tasks:
+              <span class="report-task-sum report__task-total">1</span>
             </p>
           </div>
           <div class="report-epic">
             <h3 class="report-epic-heading">Epics report</h3>
             <p class="report-epic-title">
-              Total complited: <span class="report-epic-sum">1</span>
+              Total completed: <span class="report-epic-sum">1</span>
             </p>
             <p class="report-epic-title">
               Total in progress: <span class="report-epic-sum">1</span>
@@ -299,7 +307,7 @@
               Total to do: <span class="report-epic-sum">1</span>
             </p>
             <p class="report-epic-title">
-              Total epic complited: <span class="report-epic-sum">20</span>
+              Total epic completed: <span class="report-epic-sum">20</span>
             </p>
           </div>
         </div>

@@ -709,7 +709,7 @@ btnCloseEpic.addEventListener("click", function (e) {
 
 const getMaxIdEpic = function () {
   const data = JSON.parse(localStorage.getItem("Epics"));
-  console.log(data);
+
   let id = 0;
 
   if (!data) return id;
@@ -732,6 +732,11 @@ const btnReport = document.querySelector(".btn-report");
 
 // RENDER REPORT
 
+const employeeSum = document.querySelector(".report-employee-sum");
+const fiveEmployeeName = document.querySelector(".report-employee-names");
+const fiveEmployeeTask = document.querySelector(".report-employee-tasks");
+const fiveEmployeeDate = document.querySelector(".report-employee-date");
+
 btnReport.addEventListener("click", (e) => {
   e.preventDefault();
   sectionEmployee.classList.add("hidden");
@@ -739,5 +744,58 @@ btnReport.addEventListener("click", (e) => {
   sectionEpic.classList.add("hidden");
   sectionReport.classList.remove("hidden");
 
-  // renderReports();
+  // RENDER EMPLOYEES REPORT DATA
+
+  // Get data from local storage
+  let dataEmp = JSON.parse(localStorage.getItem("Employees"));
+
+  // Render total sum employee in report
+  if (!dataEmp) employeeSum.textContent = 0;
+  let sumEmployeeReport = Object.keys(dataEmp).length;
+  console.log(sumEmployeeReport);
+  employeeSum.textContent = sumEmployeeReport;
+
+  // RENDER TASKS REPORT DATA
+
+  const taskReportCompl = document.querySelector(".report__task-complited");
+  const taskReportInpro = document.querySelector(".report__task-inprogress");
+  const taskReportTodo = document.querySelector(".report__task-todo");
+  const taskReportTotal = document.querySelector(".report__task-total");
+
+  // Get data from local storage
+  let dataTask = JSON.parse(localStorage.getItem("Tasks"));
+  console.log(dataTask);
+
+  // Render total 'complited' tasks in report
+  if (!dataTask) taskReportCompl.textContent = 0;
+
+  let taskComplReport = dataTask.filter((t) => t.status === "Complited").length;
+
+  taskReportCompl.textContent = taskComplReport;
+
+  // Render total 'in progess' tasks in report
+
+  if (!dataTask) taskReportInpro.textContent = 0;
+
+  let taskInprogReport = dataTask.filter(
+    (t) => t.status === "In progress"
+  ).length;
+
+  taskReportInpro.textContent = taskInprogReport;
+
+  // Render total 'to do' tasks in report
+
+  if (!dataTask) taskReportTodo.textContent = 0;
+
+  let taskToDoReport = dataTask.filter((t) => t.status === "To do").length;
+
+  taskReportTodo.textContent = taskToDoReport;
+
+  // Render total tasks in report
+
+  if (!dataTask) taskReportTotal.textContent = 0;
+
+  let taskTotalReport = dataTask.filter((t) => t.status).length;
+  console.log(taskTotalReport);
+  taskReportTotal.textContent = taskTotalReport;
 });
