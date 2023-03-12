@@ -1,0 +1,117 @@
+.report-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: var(--Light-Gray);
+  font-weight: 600;
+}
+
+/* REPORT EMPLOYEE */
+
+.report-employee {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  box-shadow: 0 0.1rem 0.2rem var(--Medium-Green);
+  min-height: 70vh;
+  transition: all 0.3s;
+}
+
+.report-employee-heading {
+  color: var(--Dark-Green);
+  font-weight: 400;
+}
+
+.report-employee:hover {
+  transform: translateY(-0.8rem);
+  box-shadow: 0 0.6rem 0.9rem var(--Medium-Green);
+}
+
+.report-employee-title,
+.report-employees-lists {
+  border-top: 1px solid var(--Dark-Green);
+  border-bottom: 1px solid var(--Dark-Green);
+  padding: 1rem;
+}
+
+.report-employee-title.title__five {
+  border: none;
+  padding: 0;
+}
+.report-employee-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.five-employee-box,
+.five-employee-box-title {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.5fr;
+}
+
+.rep-heading {
+  color: var(--Dark-Green);
+  letter-spacing: 0.2rem;
+  font-size: 1.8rem;
+  font-weight: 400;
+  padding: 4rem 3rem;
+}
+
+.report-container {
+  padding: 1rem 5rem;
+  gap: 2rem;
+}
+.report-employee {
+  border: 1px solid var(--Dark-Green);
+  padding: 2rem;
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+}
+
+.report-employee-sum,
+.five-employee-box {
+  font-weight: 400;
+  color: var(--Light-Gray);
+}
+/* REPORT TASK AND REPORT EPIC */
+
+.report-task-heading,
+.report-epic-heading {
+  color: var(--Dark-Green);
+  font-weight: 400;
+}
+
+.report-task-sum,
+.report-epic-sum {
+  font-weight: 400;
+  color: var(--Light-Gray);
+}
+
+.report-task,
+.report-epic {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  box-shadow: 0 0.2rem 0.6rem var(--Medium-Green);
+  border: 1px solid var(--Dark-Green);
+  box-shadow: 0 0.1rem 0.2rem var(--Medium-Green);
+  padding: 2rem;
+  border-radius: 0.2rem;
+  font-size: 1.2rem;
+  min-height: 70vh;
+  transition: all 0.3s;
+}
+
+.report-task:hover,
+.report-epic:hover {
+  transform: translateY(-0.8rem);
+  box-shadow: 0 0.6rem 0.9rem var(--Medium-Green);
+}
+
+.report-task-title,
+.report-epic-title {
+  border-top: 1px solid var(--Dark-Green);
+  border-bottom: 1px solid var(--Dark-Green);
+  padding: 1rem;
+}

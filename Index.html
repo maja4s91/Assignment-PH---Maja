@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="CSS/form-task.css" />
     <link rel="stylesheet" href="CSS/task.css" />
     <link rel="stylesheet" href="CSS/epic.css" />
+    <link rel="stylesheet" href="CSS/report.css" />
     <link rel="stylesheet" href="CSS/form-epic.css" />
     <!-- <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
@@ -33,6 +34,8 @@
         <li><button class="btn-employee">Employees</button></li>
         <li><button class="btn-task">Tasks</button></li>
         <li><button class="btn-epic">Epics</button></li>
+        <li><button class="btn-report">Reports</button></li>
+
         <li><button class="btn-ds">Delete storage</button></li>
       </ul>
     </header>
@@ -240,6 +243,66 @@
           <button type="submit " class="submit-epic">Submit</button>
           <button type="edit" class="btn-edit-epic">Edit</button>
         </form>
+      </section>
+
+      <section class="section-report hidden">
+        <h2 class="rep-heading">Reports</h2>
+        <div class="report-container">
+          <div class="report-employee">
+            <h3 class="report-employee-heading">Employees report</h3>
+            <p class="report-employee-title">
+              Total employees: <span class="report-employee-sum">1</span>
+            </p>
+            <ul class="report-employees-lists">
+              <li class="report-employee-list">
+                <p class="report-employee-title title__five">
+                  5 employees completed the most tasks:
+                </p>
+                <div class="five-employee-box-title">
+                  <p class="report-employee-names">Full name</p>
+                  <p class="report-employee-tasks">Total completed tasks</p>
+                  <p class="report-employee-data">Date</p>
+                </div>
+                <div class="five-employee-box">
+                  <p class="report-employee-names">Maja</p>
+                  <p class="report-employee-tasks">7</p>
+                  <p class="report-employee-data">17/12/2023</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="report-task">
+            <h3 class="report-task-heading">Tasks report</h3>
+            <p class="report-task-title">
+              Total complited: <span class="report-task-sum">1</span>
+            </p>
+            <p class="report-task-title">
+              Total in progress: <span class="report-task-sum">1</span>
+            </p>
+            <p class="report-task-title">
+              Total to do: <span class="report-task-sum">1</span>
+            </p>
+
+            <p class="report-task-title">
+              Total tasks: <span class="report-task-sum">1</span>
+            </p>
+          </div>
+          <div class="report-epic">
+            <h3 class="report-epic-heading">Epics report</h3>
+            <p class="report-epic-title">
+              Total complited: <span class="report-epic-sum">1</span>
+            </p>
+            <p class="report-epic-title">
+              Total in progress: <span class="report-epic-sum">1</span>
+            </p>
+            <p class="report-epic-title">
+              Total to do: <span class="report-epic-sum">1</span>
+            </p>
+            <p class="report-epic-title">
+              Total epic complited: <span class="report-epic-sum">20</span>
+            </p>
+          </div>
+        </div>
       </section>
     </main>
   </body>

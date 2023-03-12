@@ -16,7 +16,8 @@
 .btn-task,
 .btn-sprint,
 .btn-ds,
-.btn-epic {
+.btn-epic,
+.btn-report {
   background-color: var(--Medium-Green);
   border: none;
   color: var(--Dark-Gray);
@@ -37,7 +38,9 @@
 .btn-ds:hover,
 .btn-ds:focus,
 .btn-epic:hover,
-.btn-epic:focus {
+.btn-epic:focus,
+.btn-report:hover,
+.btn-report:focus {
   color: var(--Dark-Green);
   background-color: #fff;
 }

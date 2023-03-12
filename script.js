@@ -24,6 +24,7 @@ btnEmployee.addEventListener("click", (e) => {
   e.preventDefault();
   sectionTask.classList.add("hidden");
   sectionEpic.classList.add("hidden");
+  sectionReport.classList.add("hidden");
   sectionEmployee.classList.remove("hidden");
 
   renderEmployees();
@@ -273,6 +274,7 @@ btnTask.addEventListener("click", (e) => {
   e.preventDefault();
   sectionEmployee.classList.add("hidden");
   sectionEpic.classList.add("hidden");
+  sectionReport.classList.add("hidden");
   sectionTask.classList.remove("hidden");
 
   renderTasks();
@@ -520,6 +522,7 @@ btnEpic.addEventListener("click", (e) => {
   e.preventDefault();
   sectionEmployee.classList.add("hidden");
   sectionTask.classList.add("hidden");
+  sectionReport.classList.add("hidden");
   sectionEpic.classList.remove("hidden");
 
   renderEpics();
@@ -719,3 +722,22 @@ const getMaxIdEpic = function () {
 };
 
 let globalIdEpic = getMaxIdEpic() + 1;
+
+// ///////////////////////////////////////////////TASK/////////////////////////
+
+// REPORTS
+
+const sectionReport = document.querySelector(".section-report");
+const btnReport = document.querySelector(".btn-report");
+
+// RENDER REPORT
+
+btnReport.addEventListener("click", (e) => {
+  e.preventDefault();
+  sectionEmployee.classList.add("hidden");
+  sectionTask.classList.add("hidden");
+  sectionEpic.classList.add("hidden");
+  sectionReport.classList.remove("hidden");
+
+  // renderReports();
+});
