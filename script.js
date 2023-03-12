@@ -15,6 +15,7 @@ const listsEmployee = document.querySelector(".lists-added-employee");
 const btnClose = document.querySelector(".btn-close");
 // const employeeInfo = document.querySelector(".employee-info");
 const btnEdit = document.querySelector(".btn-edit");
+const headListsEmployee = document.querySelector(".lists-employee");
 
 let editEmployeeId = 0;
 
@@ -26,6 +27,10 @@ btnEmployee.addEventListener("click", (e) => {
   sectionEpic.classList.add("hidden");
   sectionReport.classList.add("hidden");
   sectionEmployee.classList.remove("hidden");
+
+  const data = JSON.parse(localStorage.getItem("Employees"));
+  console.log(data);
+  if (!data) headListsEmployee.classList.add("hidden");
 
   renderEmployees();
 });
@@ -56,7 +61,7 @@ btnSubmit.addEventListener("click", (e) => {
   e.preventDefault();
 
   formCreate.classList.add("hidden");
-
+  headListsEmployee.classList.remove("hidden");
   // Getting data from the form
   let addEmployee = {};
 
@@ -192,7 +197,7 @@ const renderEdit = function () {
 // Renedering form data as a list items
 
 const renderEmployees = function () {
-  const data = JSON.parse(localStorage.getItem("Employees"));
+  let data = JSON.parse(localStorage.getItem("Employees"));
   console.log(data);
 
   listsEmployee.innerHTML = "";
@@ -267,6 +272,8 @@ const listsTask = document.querySelector(".lists-added-tasks");
 const selectAssignee = document.querySelector(".full-name-task");
 const btnEditTask = document.querySelector(".btn-edit-task");
 
+const headListsTask = document.querySelector(".lists-task");
+
 let editTaskId = 0;
 // RENDER TASK ENTITY
 
@@ -276,6 +283,9 @@ btnTask.addEventListener("click", (e) => {
   sectionEpic.classList.add("hidden");
   sectionReport.classList.add("hidden");
   sectionTask.classList.remove("hidden");
+
+  const data = JSON.parse(localStorage.getItem("Tasks"));
+  if (!data) headListsTask.classList.add("hidden");
 
   renderTasks();
 });
@@ -314,6 +324,7 @@ btnSubmitTask.addEventListener("click", function (e) {
   e.preventDefault();
 
   formTask.classList.add("hidden");
+  headListsTask.classList.remove("hidden");
 
   let taskObject = {};
 
@@ -514,6 +525,8 @@ const listsEpic = document.querySelector(".lists-added-epics");
 
 const btnEditEpic = document.querySelector(".btn-edit-epic");
 
+const headListsEpic = document.querySelector(".lists-epic");
+
 let editEpicId = 0;
 
 // RENDER EPIC ENTITY
@@ -524,6 +537,10 @@ btnEpic.addEventListener("click", (e) => {
   sectionTask.classList.add("hidden");
   sectionReport.classList.add("hidden");
   sectionEpic.classList.remove("hidden");
+
+  const data = JSON.parse(localStorage.getItem("Epics"));
+  console.log(data);
+  if (!data) headListsEpic.classList.add("hidden");
 
   renderEpics();
 });
@@ -549,6 +566,7 @@ btnSubmitEpic.addEventListener("click", function (e) {
   e.preventDefault();
 
   formEpic.classList.add("hidden");
+  headListsEpic.classList.remove("hidden");
 
   let epicObject = {};
 
@@ -750,14 +768,16 @@ btnReport.addEventListener("click", (e) => {
   let dataEmp = JSON.parse(localStorage.getItem("Employees"));
 
   // Render total sum employee in report
-  if (!dataEmp) employeeSum.textContent = 0;
-  let sumEmployeeReport = Object.keys(dataEmp).length;
-  console.log(sumEmployeeReport);
-  employeeSum.textContent = sumEmployeeReport;
 
+  if (!dataEmp) employeeSum.textContent = 0;
+  else {
+    let sumEmployeeReport = Object.keys(dataEmp).length;
+    console.log(sumEmployeeReport);
+    employeeSum.textContent = sumEmployeeReport;
+  }
   // RENDER TASKS REPORT DATA
 
-  const taskReportCompl = document.querySelector(".report__task-complited");
+  const taskReportCompl = document.querySelector(".report__task-completed");
   const taskReportInpro = document.querySelector(".report__task-inprogress");
   const taskReportTodo = document.querySelector(".report__task-todo");
   const taskReportTotal = document.querySelector(".report__task-total");
@@ -766,36 +786,39 @@ btnReport.addEventListener("click", (e) => {
   let dataTask = JSON.parse(localStorage.getItem("Tasks"));
   console.log(dataTask);
 
-  // Render total 'complited' tasks in report
-  if (!dataTask) taskReportCompl.textContent = 0;
-
-  let taskComplReport = dataTask.filter((t) => t.status === "Complited").length;
-
-  taskReportCompl.textContent = taskComplReport;
-
-  // Render total 'in progess' tasks in report
-
-  if (!dataTask) taskReportInpro.textContent = 0;
-
-  let taskInprogReport = dataTask.filter(
-    (t) => t.status === "In progress"
-  ).length;
-
-  taskReportInpro.textContent = taskInprogReport;
-
-  // Render total 'to do' tasks in report
-
-  if (!dataTask) taskReportTodo.textContent = 0;
-
-  let taskToDoReport = dataTask.filter((t) => t.status === "To do").length;
-
-  taskReportTodo.textContent = taskToDoReport;
-
   // Render total tasks in report
 
-  if (!dataTask) taskReportTotal.textContent = 0;
+  if (!dataTask) {
+    taskReportTotal.textContent =
+      taskReportCompl.textContent =
+      taskReportInpro.textContent =
+      taskReportTodo.textContent =
+        0;
+  } else {
+    let taskTotalReport = dataTask.filter((t) => t.status).length;
+    console.log(taskTotalReport);
+    taskReportTotal.textContent = taskTotalReport;
 
-  let taskTotalReport = dataTask.filter((t) => t.status).length;
-  console.log(taskTotalReport);
-  taskReportTotal.textContent = taskTotalReport;
+    // Render total 'completed' tasks in report
+
+    let taskComplReport = dataTask.filter(
+      (t) => t.status === "Completed"
+    ).length;
+
+    taskReportCompl.textContent = taskComplReport;
+
+    // Render total 'in progess' tasks in report
+
+    let taskInprogReport = dataTask.filter(
+      (t) => t.status === "In progress"
+    ).length;
+
+    taskReportInpro.textContent = taskInprogReport;
+
+    // Render total 'to do' tasks in report
+
+    let taskToDoReport = dataTask.filter((t) => t.status === "To do").length;
+
+    taskReportTodo.textContent = taskToDoReport;
+  }
 });
