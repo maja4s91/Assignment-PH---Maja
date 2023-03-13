@@ -3,6 +3,8 @@
   text-align: center;
   font-size: 1.6rem;
   color: var(--Dark-Grey);
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .input-tas {

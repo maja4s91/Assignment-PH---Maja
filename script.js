@@ -142,6 +142,18 @@ listsEmployee.addEventListener("click", function (e) {
       .closest(".employee-info")
       .querySelector(".id-empl").textContent;
 
+    const empl = data.filter((em) => em.id === +selectedId);
+
+    // Clear tasks data
+    let tasks = JSON.parse(localStorage.getItem("Tasks"));
+    if (!tasks) {
+      tasks.forEach((t) => {
+        if (t.assignee === empl.assignee) {
+          t.assignee = "";
+        }
+      });
+    }
+
     data = data.filter((em) => em.id !== +selectedId);
     localStorage.setItem("Employees", JSON.stringify(data));
     renderEmployees();
@@ -231,13 +243,6 @@ btnClose.addEventListener("click", function (e) {
   listsEmployee.classList.remove("hidden");
 });
 
-const btnDs = document.querySelector(".btn-ds");
-
-btnDs.addEventListener("click", function name(params) {
-  localStorage.clear();
-  renderEmployees();
-});
-
 const getMaxId = function () {
   const data = JSON.parse(localStorage.getItem("Employees"));
 
@@ -270,6 +275,7 @@ const inputStatus = document.querySelector(".select-status");
 const inputDue = document.querySelector(".due");
 const listsTask = document.querySelector(".lists-added-tasks");
 const selectAssignee = document.querySelector(".full-name-task");
+const selectEpic = document.querySelector(".task-epic");
 const btnEditTask = document.querySelector(".btn-edit-task");
 
 const headListsTask = document.querySelector(".lists-task");
@@ -302,18 +308,11 @@ btnCreateTask.addEventListener("click", function (e) {
 
   btnEditTask.classList.add("hidden");
 
-  const data = JSON.parse(localStorage.getItem("Employees"));
-  console.log(data);
+  // Create assignees selector field
+  renderSelectAssigne();
 
-  selectAssignee.innerHTML = `<option class="option-assignee" value="">Unassigned</option>`;
-
-  data.forEach((e) => {
-    let html = `
-    <option class="option-assignee"value="${e.name}">${e.name}</option>
-  `;
-
-    selectAssignee.insertAdjacentHTML("beforeend", html);
-  });
+  // Create epics selector field
+  renderSelectEpic();
 
   inputName.value = inputTitle.value = inputDesc.value = inputDue.value = "";
 });
@@ -333,6 +332,7 @@ btnSubmitTask.addEventListener("click", function (e) {
   const assignee = selectAssignee.value;
   const status = inputStatus.value;
   const dueDate = inputDue.value;
+  const epicId = selectEpic.value;
 
   taskObject = {
     id: globalIdTask++,
@@ -341,6 +341,7 @@ btnSubmitTask.addEventListener("click", function (e) {
     assignee: assignee,
     status: status,
     dueDate: dueDate,
+    epic: epicId,
   };
 
   console.log(taskObject);
@@ -365,7 +366,7 @@ btnSubmitTask.addEventListener("click", function (e) {
 
 //////////////////////////////////////////
 
-// READING AND DELETING EMPLOYEE DATA
+// READING AND DELETING TASK DATA
 
 listsTask.addEventListener("click", function (e) {
   // Checking if the delete btn is clicked
@@ -395,6 +396,9 @@ listsTask.addEventListener("click", function (e) {
     // Find task object from storage based on selected id
     const task = data.filter((t) => t.id === +selectedIdTask)[0];
 
+    renderSelectAssigne();
+    renderSelectEpic();
+
     // Push task data to form
 
     inputTitle.value = task.title;
@@ -402,6 +406,7 @@ listsTask.addEventListener("click", function (e) {
     selectAssignee.value = task.assignee;
     inputStatus.value = task.status;
     inputDue.value = task.dueDate;
+    selectEpic.value = task.epic;
   } else {
     // DELETING TASK DATA
 
@@ -432,6 +437,7 @@ btnEditTask.addEventListener("click", function (e) {
   const assignee = selectAssignee.value;
   const status = inputStatus.value;
   const dueDate = inputDue.value;
+  const epicId = selectEpic.value;
 
   // Find selected task for editing
   let data = JSON.parse(localStorage.getItem("Tasks"));
@@ -445,7 +451,7 @@ btnEditTask.addEventListener("click", function (e) {
   editTask.assignee = assignee;
   editTask.status = status;
   editTask.dueDate = dueDate;
-
+  editTask.epic = epicId;
   // Send updated data to local storage
 
   localStorage.setItem("Tasks", JSON.stringify(data));
@@ -460,14 +466,25 @@ btnEditTask.addEventListener("click", function (e) {
 const renderTasks = function () {
   let data = JSON.parse(localStorage.getItem("Tasks"));
 
+  const dataEmpl = JSON.parse(localStorage.getItem("Employees"));
+  console.log(dataEmpl);
+
   listsTask.innerHTML = "";
   if (!data) return;
 
   data.forEach((t) => {
+    let emplName = "Unassigned";
+    if (dataEmpl) {
+      const empl = dataEmpl.filter((e) => e.id === +t.assignee);
+      console.log(empl);
+
+      if (empl.length > 0) emplName = empl[0].name;
+    }
+
     let html = `<li class="task-info flex">
     <p class="li-id-task">${t.id}</p>
    <p class="li-title">${t.title}</p>
-  <p class="li-assignee">${t.assignee}</p>
+  <p class="li-assignee">${emplName}</p>
   <p class="li-status">${t.status}</p>
 
   <p class="li-due">${t.dueDate}</p>
@@ -491,6 +508,40 @@ btnCloseTask.addEventListener("click", function (e) {
   btnSubmitTask.classList.remove("hidden");
   listsTask.classList.remove("hidden");
 });
+
+const renderSelectAssigne = function () {
+  // Create assignees selector field
+  const data = JSON.parse(localStorage.getItem("Employees"));
+
+  selectAssignee.innerHTML = `<option class="option-assignee" value="">Unassigned</option>`;
+
+  if (data) {
+    data.forEach((e) => {
+      let html = `
+    <option class="option-assignee"value="${e.id}">${e.name}</option>
+  `;
+
+      selectAssignee.insertAdjacentHTML("beforeend", html);
+    });
+  }
+};
+
+const renderSelectEpic = function () {
+  // Create epics selector field
+  const data = JSON.parse(localStorage.getItem("Epics"));
+
+  selectEpic.innerHTML = `<option class="option-epic" value="">Unassigned</option>`;
+
+  if (data) {
+    data.forEach((e) => {
+      let html = `
+  <option class="option-epic"value="${e.id}">${e.title}</option>
+`;
+
+      selectEpic.insertAdjacentHTML("beforeend", html);
+    });
+  }
+};
 
 const getMaxIdTask = function () {
   const data = JSON.parse(localStorage.getItem("Tasks"));
@@ -526,6 +577,7 @@ const listsEpic = document.querySelector(".lists-added-epics");
 const btnEditEpic = document.querySelector(".btn-edit-epic");
 
 const headListsEpic = document.querySelector(".lists-epic");
+const tasksEpic = document.querySelector(".tasks-epic-box");
 
 let editEpicId = 0;
 
@@ -639,6 +691,67 @@ listsEpic.addEventListener("click", function (e) {
     inputTitleEpic.value = epic.title;
     inputDescEpic.value = epic.description;
     inputStatusEpic.value = epic.status;
+
+    let dataTasks = JSON.parse(localStorage.getItem("Tasks"));
+    console.log(dataTasks);
+
+    tasksEpic.innerHTML = "";
+
+    if (!dataTasks) {
+      let html = `
+  <label for="list-epic">Tasks list</label>
+  <input
+    class="list-epic-task"
+    type="text"
+    placeholder="No tasks for this epic"
+    readonly
+  />`;
+      tasksEpic.insertAdjacentHTML("beforeend", html);
+    } else {
+      const epicTasks = dataTasks.filter((t) => +t.epic === editEpicId);
+      console.log(epicTasks);
+
+      if (epicTasks.length === 0) {
+        let html = `
+        <label for="list-epic">Tasks list</label>
+        <input
+          class="list-epic-task"
+          type="text"
+          placeholder="No tasks for this epic"
+          readonly
+        />`;
+        tasksEpic.insertAdjacentHTML("beforeend", html);
+      } else {
+        let cnt = 0;
+        epicTasks.forEach((et) => {
+          let html = `
+        <label for="list-epic"></label>
+        <input
+          class="list-epic-task"
+          type="text"
+          placeholder=${et.title}
+          readonly
+        />
+        
+        `;
+          if (cnt === 0) {
+            html = `
+            <label for="list-epic">Tasks list</label>
+        <input
+          class="list-epic-task"
+          type="text"
+          placeholder=${et.title}
+          readonly
+        />
+        
+        `;
+          }
+
+          tasksEpic.insertAdjacentHTML("beforeend", html);
+          cnt++;
+        });
+      }
+    }
   } else {
     // DELETING EPIC DATA
 
@@ -647,6 +760,18 @@ listsEpic.addEventListener("click", function (e) {
     const selectedIdEpic = e.target
       .closest(".epic-info")
       .querySelector(".li-id-epic").textContent;
+
+    const epic = data.filter((e) => e.id === +selectedIdEpic);
+
+    // Clear tasks data
+    let tasks = JSON.parse(localStorage.getItem("Tasks"));
+    if (!tasks) {
+      tasks.forEach((t) => {
+        if (t.epic === epic.id) {
+          t.assignee = "";
+        }
+      });
+    }
 
     data = data.filter((ep) => ep.id !== +selectedIdEpic);
     localStorage.setItem("Epics", JSON.stringify(data));
@@ -754,6 +879,15 @@ const employeeSum = document.querySelector(".report-employee-sum");
 const fiveEmployeeName = document.querySelector(".report-employee-names");
 const fiveEmployeeTask = document.querySelector(".report-employee-tasks");
 const fiveEmployeeDate = document.querySelector(".report-employee-date");
+const taskReportCompl = document.querySelector(".report__task-completed");
+const taskReportInpro = document.querySelector(".report__task-inprogress");
+const taskReportTodo = document.querySelector(".report__task-todo");
+const taskReportTotal = document.querySelector(".report__task-total");
+const epicReportCompl = document.querySelector(".report__epic-completed");
+const epicReportInpro = document.querySelector(".report__epic-inprogress");
+const epicReportTodo = document.querySelector(".report__epic-todo");
+const epicReportTotal = document.querySelector(".report__epic-total");
+const fiveEmpTaskReport = document.querySelector(".five-employee-box");
 
 btnReport.addEventListener("click", (e) => {
   e.preventDefault();
@@ -761,6 +895,7 @@ btnReport.addEventListener("click", (e) => {
   sectionTask.classList.add("hidden");
   sectionEpic.classList.add("hidden");
   sectionReport.classList.remove("hidden");
+  fiveEmpTaskReport.textContent = "";
 
   // RENDER EMPLOYEES REPORT DATA
 
@@ -775,12 +910,8 @@ btnReport.addEventListener("click", (e) => {
     console.log(sumEmployeeReport);
     employeeSum.textContent = sumEmployeeReport;
   }
-  // RENDER TASKS REPORT DATA
 
-  const taskReportCompl = document.querySelector(".report__task-completed");
-  const taskReportInpro = document.querySelector(".report__task-inprogress");
-  const taskReportTodo = document.querySelector(".report__task-todo");
-  const taskReportTotal = document.querySelector(".report__task-total");
+  // RENDER TASKS REPORT DATA
 
   // Get data from local storage
   let dataTask = JSON.parse(localStorage.getItem("Tasks"));
@@ -798,6 +929,47 @@ btnReport.addEventListener("click", (e) => {
     let taskTotalReport = dataTask.filter((t) => t.status).length;
     console.log(taskTotalReport);
     taskReportTotal.textContent = taskTotalReport;
+
+    // Find 5 top employees
+    // Filter tasks that are completed and due date is 30 days in past
+    let timeInPast = new Date();
+    timeInPast.setDate(timeInPast.getDate() - 30);
+    let filteredTasks = dataTask.filter(
+      (t) =>
+        t.assignee != "" &&
+        t.status === "Completed" &&
+        Date.parse(t.dueDate) > timeInPast
+    );
+
+    if (filteredTasks.length > 0) {
+      // Create mapping empl -> counter of completed tasks
+      const map = new Map();
+      filteredTasks.forEach((t) => {
+        const emplId = t.assignee;
+        let tCounter = map.get(emplId);
+        if (tCounter) {
+          tCounter++;
+          map.set(emplId, tCounter);
+        } else {
+          map.set(emplId, 1);
+        }
+      });
+
+      console.log(map);
+      let sortedArray = [...map.entries()].sort((a, b) =>
+        a[1] > b[1] ? -1 : 1
+      );
+      console.log(sortedArray);
+
+      for (let i = 0; i < 5 && i < sortedArray.length; i++) {
+        const empl = dataEmp.filter((e) => e.id === +sortedArray[i][0])[0];
+
+        let html = `<p class="report-employee-names">${empl.name}</p>
+<p class="report-employee-tasks">${sortedArray[i][1]}</p>`;
+
+        fiveEmpTaskReport.insertAdjacentHTML("beforeend", html);
+      }
+    }
 
     // Render total 'completed' tasks in report
 
@@ -820,5 +992,47 @@ btnReport.addEventListener("click", (e) => {
     let taskToDoReport = dataTask.filter((t) => t.status === "To do").length;
 
     taskReportTodo.textContent = taskToDoReport;
+  }
+
+  // RENDER EPIC REPORT DATA
+
+  // Get data from local storage
+  let dataEpic = JSON.parse(localStorage.getItem("Epics"));
+  console.log(dataEpic);
+
+  // Render total epics in report
+
+  if (!dataEpic) {
+    epicReportTotal.textContent =
+      epicReportCompl.textContent =
+      epicReportInpro.textContent =
+      epicReportTodo.textContent =
+        0;
+  } else {
+    let epicTotalReport = dataEpic.filter((e) => e.status).length;
+    console.log(epicTotalReport);
+    epicReportTotal.textContent = epicTotalReport;
+
+    // Render total 'completed' epics in report
+
+    let epicComplReport = dataEpic.filter(
+      (e) => e.status === "Completed"
+    ).length;
+
+    epicReportCompl.textContent = epicComplReport;
+
+    // Render total 'in progess' epics in report
+
+    let epicInprogReport = dataEpic.filter(
+      (e) => e.status === "In progress"
+    ).length;
+
+    epicReportInpro.textContent = epicInprogReport;
+
+    // Render total 'to do' epics in report
+
+    let epicToDoReport = dataEpic.filter((e) => e.status === "To do").length;
+
+    epicReportTodo.textContent = epicToDoReport;
   }
 });

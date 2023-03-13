@@ -35,8 +35,6 @@
         <li><button class="btn-task">Tasks</button></li>
         <li><button class="btn-epic">Epics</button></li>
         <li><button class="btn-report">Reports</button></li>
-
-        <li><button class="btn-ds">Delete storage</button></li>
       </ul>
     </header>
     <main class="main-container">
@@ -166,6 +164,11 @@
           </div>
 
           <div class="input-tas">
+            <label for="task-epic">Epic</label>
+            <select id="select-epic" class="task-epic" required></select>
+          </div>
+
+          <div class="input-tas">
             <label for="due">Due date</label>
             <input class="due" type="date" placeholder="23/1/2024" required />
           </div>
@@ -196,7 +199,6 @@
           <button class="btn-close-epic">
             <ion-icon class="icon-close-epic" name="close-outline"></ion-icon>
           </button>
-
           <div class="input-epi">
             <label for="title">Title</label>
             <input
@@ -232,18 +234,8 @@
               required
             ></textarea>
           </div>
-          <div class="input-epi">
-            <label for="list-epic">Tasks list</label>
-            <select id="select-assignee" class="list-epic" required>
-              <!-- <input
-              class="full-name-task"
-              type="text"
-              placeholder="Maja Stojanovic"
-              required
-            />  -->
-            </select>
-          </div>
 
+          <div class="input-epi tasks-epic-box"></div>
           <button type="submit " class="submit-epic">Submit</button>
           <button type="edit" class="btn-edit-epic">Edit</button>
         </form>
@@ -265,13 +257,8 @@
                 <div class="five-employee-box-title">
                   <p class="report-employee-names">Full name</p>
                   <p class="report-employee-tasks">Total completed tasks</p>
-                  <p class="report-employee-data">Date</p>
                 </div>
-                <div class="five-employee-box">
-                  <p class="report-employee-names">Maja</p>
-                  <p class="report-employee-tasks">7</p>
-                  <p class="report-employee-date">17/12/2023</p>
-                </div>
+                <div class="five-employee-box"></div>
               </li>
             </ul>
           </div>
@@ -298,16 +285,20 @@
           <div class="report-epic">
             <h3 class="report-epic-heading">Epics report</h3>
             <p class="report-epic-title">
-              Total completed: <span class="report-epic-sum">1</span>
+              Total completed:
+              <span class="report-epic-sum report__epic-completed">1</span>
             </p>
             <p class="report-epic-title">
-              Total in progress: <span class="report-epic-sum">1</span>
+              Total in progress:
+              <span class="report-epic-sum report__epic-inprogress">1</span>
             </p>
             <p class="report-epic-title">
-              Total to do: <span class="report-epic-sum">1</span>
+              Total to do:
+              <span class="report-epic-sum report__epic-todo">1</span>
             </p>
             <p class="report-epic-title">
-              Total epic completed: <span class="report-epic-sum">20</span>
+              Total epic completed:
+              <span class="report-epic-sum report__epic-total">20</span>
             </p>
           </div>
         </div>
