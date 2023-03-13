@@ -729,7 +729,7 @@ listsEpic.addEventListener("click", function (e) {
         <input
           class="list-epic-task"
           type="text"
-          placeholder=${et.title}
+          placeholder="${et.title}"
           readonly
         />
         
@@ -740,7 +740,7 @@ listsEpic.addEventListener("click", function (e) {
         <input
           class="list-epic-task"
           type="text"
-          placeholder=${et.title}
+          placeholder="${et.title}"
           readonly
         />
         
